@@ -1,10 +1,17 @@
 const auth = {
     showLogin: function(){
-        $(`${config.mainView}`).load("./views/login.html");
-        window.history.pushState({}, "Login", "login");
-    },
-    showRegister: function(){
-        $(`${config.mainView}`).load("./views/register.html");
-        window.history.pushState({}, "Register", "register");
+        var provider = new firebase.auth.OAuthProvider('microsoft.com');
+        firebase.auth().signInWithPopup(provider)
+        .then(function(result) {
+          // User is signed in.
+          // IdP data available in result.additionalUserInfo.profile.
+          // OAuth access token can also be retrieved:
+          // result.credential.accessToken
+          console.log("Success: "+JSON.stringify(result));
+        })
+        .catch(function(error) {
+          // Handle error.
+          console.log("error"+error);
+        });      
     }
 }
