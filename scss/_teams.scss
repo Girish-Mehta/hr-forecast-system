@@ -2,15 +2,13 @@
     display: flex;
     flex-flow: column;
     max-width: 75rem;
-    margin: 1rem auto;
+    margin: 2rem 0;
     &-title{
-        margin:  0 0.5rem;
         color: #e68a00;
     }
     .members{
         display: flex;
         align-items: center;
-        justify-content: center;
         .member-container{
             flex: 1;
             justify-content: center;
@@ -18,6 +16,8 @@
             display: flex;
             padding: 1rem;
             margin: 1rem 0.5rem;
+            max-width: 10rem;
+            min-width: 10rem;
             .name {
                 font-size: 1rem;
             }
