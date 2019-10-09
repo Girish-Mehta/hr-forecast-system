@@ -123,6 +123,12 @@ function getUrlParams(url) {
   return params;
 }
 
+function showInterviews() {
+  firebase.database().ref('/employees/' + userId).once('value').then(function (snapshot) {
+    $("#interviewsContainer").load("../views/hr/interviews.html");
+  });
+}
+
 var urlRedirect = {
   login: auth.showLogin,
   dashboard: showDashboard,
