@@ -59,6 +59,25 @@ function handleShowRegister() {
   auth.showRegister();
 }
 
+function showDashboard() {
+  if (firebase.auth() != null) {
+    if (firebase.auth().currentUser.email == "vissans@publicisgroupe.net") {
+      // HR user
+      $("#view").load("../views/hr/landing");
+    } else if (firebase.auth().currentUser.email == "girmehta@publicisgroupe.net") {
+      $("#view").load("../views/account/landing");
+    }
+  }
+}
+
+function showHrDashboard() {
+  $("#view").load("../views/hr/landing.html");
+}
+
+function showPmDashboard() {
+  $("#view").load("../views/pm/landing.html");
+}
+
 window.onload = function () {
   handleUrl(location.href);
 };
@@ -85,5 +104,5 @@ function getUrlParams(url) {
 
 var urlRedirect = {
   login: auth.showLogin,
-  register: auth.showRegister
+  dashboard: showDashboard
 };
