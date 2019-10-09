@@ -24,3 +24,13 @@
         }
     }
 }
+.addRequirementForm{
+    &-form{
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        button{
+            width: 100%;
+        }
+    }
+}
