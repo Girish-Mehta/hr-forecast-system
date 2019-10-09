@@ -1,0 +1,12 @@
+.hr-container{
+    background-color: red;
+    .navtab-container{
+        .nav{
+            .nav-item{
+                .active{
+                    background-color: aqua;
+                }
+            }
+        }
+    }
+}
