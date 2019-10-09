@@ -26,6 +26,32 @@ var config = {
 var endpoints = {};
 "use strict";
 
+var hr = {
+  showCandidates: function showCandidates() {
+    firebase.database().ref("candidates/").once("value", function (snapshot) {
+      var candidates = snapshot.val();
+      Object.keys(candidates).map(function (candidate) {
+        if (candidates[candidate].status === "scheduled") {
+          var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_schd active p-2\">\n                    <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">".concat(candidates[candidate].name, "</h5>\n                        <p class=\"card-text\">Skills: ").concat(candidates[candidate].skills.join(","), "</p>\n                        <p class=\"card-text text-secondary\">Interview at: ").concat(candidates[candidate].interviewDate, "</p>\n                        <a href=\"#\" class=\"btn btn-primary\">Selected</a>\n                        <a href=\"#\" class=\"btn btn-danger\">Rejected</a>\n                    </div>\n                    </div>\n                </div>");
+        } else if (candidates[candidate].status === "selected") {
+          var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_selected p-2\">\n                    <div class=\"card\">\n                        <div class=\"card-body\">\n                            <h5 class=\"card-title\">".concat(candidates[candidate].name, "</h5>\n                            <p class=\"card-text\">Skills: ").concat(candidates[candidate].skills.join(","), "</p>\n                            <p class=\"card-text\">Status: <span class=\"text-success\">Selected</span></p>\n                        </div>\n                    </div>\n                </div>");
+        } else {
+          var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_rejected p-2\">\n                    <div class=\"card\">\n                        <div class=\"card-body\">\n                            <h5 class=\"card-title\">".concat(candidates[candidate].name, "</h5>\n                            <p class=\"card-text\">Skills: ").concat(candidates[candidate].skills.join(","), "</p>\n                            <p class=\"card-text\">Status: <span class=\"text-danger\">Rejected</span></p>\n                        </div>\n                    </div>\n                </div>");
+        }
+
+        $("#interview_candidates").append(candidateUI);
+      });
+    });
+  },
+  handleCardShow: function handleCardShow(event) {
+    $("#interview_filter").find("a").removeClass("active");
+    $(".interview_card").removeClass("active");
+    $("#".concat(event.target.id)).addClass("active");
+    $(".".concat(event.target.id)).addClass("active");
+  }
+};
+"use strict";
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyDL-vEobMb_AeJ6NcEwqWzops9I9C0pR0w",
@@ -85,6 +111,7 @@ function showDashboard() {
 function showHrDashboard() {
   $("#view").load("../views/hr/landing.html");
   $("header").show();
+  hr.showCandidates();
 }
 
 function showPmDashboard() {
