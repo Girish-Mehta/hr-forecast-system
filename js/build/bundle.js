@@ -2,12 +2,18 @@
 
 var auth = {
   showLogin: function showLogin() {
-    $("".concat(config.mainView)).load("./views/login.html");
-    window.history.pushState({}, "Login", "login");
-  },
-  showRegister: function showRegister() {
-    $("".concat(config.mainView)).load("./views/register.html");
-    window.history.pushState({}, "Register", "register");
+    var provider = new firebase.auth.OAuthProvider('microsoft.com');
+    firebase.auth().signInWithRedirect(provider);
+    firebase.auth().getRedirectResult().then(function (result) {
+      // User is signed in.
+      // IdP data available in result.additionalUserInfo.profile.
+      // OAuth access token can also be retrieved:
+      // result.credential.accessToken
+      console.log("Success: " + JSON.stringify(result));
+    })["catch"](function (error) {
+      // Handle error.
+      console.log("error" + error);
+    });
   }
 };
 "use strict";
@@ -16,6 +22,20 @@ var config = {
   mainView: "#view"
 };
 "use strict";
+
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyDL-vEobMb_AeJ6NcEwqWzops9I9C0pR0w",
+  authDomain: "hrforecastsystem.firebaseapp.com",
+  databaseURL: "https://hrforecastsystem.firebaseio.com",
+  projectId: "hrforecastsystem",
+  storageBucket: "",
+  messagingSenderId: "645473796645",
+  appId: "1:645473796645:web:a3539d18ce83b3a73735cc",
+  measurementId: "G-Y7RKP3CTBQ"
+}; // Initialize Firebase
+
+firebase.initializeApp(firebaseConfig);
 
 function handleShowLogin() {
   auth.showLogin();

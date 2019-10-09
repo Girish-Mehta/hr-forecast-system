@@ -1,6 +1,5 @@
 node_modules
 .git
-js/build
 
 # Local Netlify folder
 .netlify
