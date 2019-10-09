@@ -1,10 +1,8 @@
 .hr-container{
-    .navtab-container{
-        .nav{
-            .nav-item{
-                .active{
-                }
-            }
+    .interview_card{
+        display: none;
+        &.active{
+            display: block;
         }
     }
 }

@@ -58,6 +58,7 @@ function showDashboard() {
 function showHrDashboard() {
     $("#view").load("../views/hr/landing.html");
     $("header").show();
+    hr.showCandidates();
 }
 
 function showPmDashboard() {

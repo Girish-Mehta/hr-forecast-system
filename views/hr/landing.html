@@ -1,46 +1,33 @@
-<!-- <div>
-    <ul>
-        <li onclick="showInterviews()">Interviews</li>
-        <li>Accounts</li>
-    </ul>
-</div>
-<div>
-    <div id="interviewsContainer"></div>
-        <ul>
-            <li>
-
+<div class="hr-container container-fluid">
+    <div class="navtab-container">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="true">Interviews</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                    aria-controls="pills-profile" aria-selected="false">Accounts</a>
             </li>
         </ul>
-    <div id="accountsContainer"></div>
-</div>
-
-<div class="d-none card" style="width: 18rem;" id="duplicateCard">
-    <div class="card-body">
-        <h5 class="card-title">Name</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Interview Date</h6>
-        <p class="card-text">Skills</p>
-        <p class="card-status">Status</p>
     </div>
-</div> -->
-
-            <div class="hr-container container-fluid">
-                    <div class="navtab-container">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Interviews</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Accounts</a>
-                            </li>
-                          </ul>
-                    </div>
-                
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">slide1</div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">slide 2</div>
-                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">slide 3</div>
-                      </div>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <ul id="interview_filter" class="nav nav-pills">
+                    <li class="nav-item">
+                        <a onclick="hr.handleCardShow(event)" id="interview_filter_schd" class="nav-link active" href="javascript:void(0)">Scheduled</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="hr.handleCardShow(event)" id="interview_filter_selected" class="nav-link" href="#">Selected</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="hr.handleCardShow(event)" id="interview_filter_rejected" class="nav-link" href="#">Rejected</a>
+                    </li>
+                </ul>
+                <div id="interview_candidates" class="row">
                 </div>
-
-
- 
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">slide 2</div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">slide 3</div>
+    </div>
+</div>
