@@ -3,6 +3,11 @@ html,body{
     height: 100%;
     width: 100%;
 }
+@media (min-width: 1300px) {
+    .container {
+        max-width: 1280px;
+    }
+}
 .navbar{
     @media only screen and (min-width: 1024px) {
         height: 80px;
