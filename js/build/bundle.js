@@ -220,7 +220,7 @@ var pm = {
           $("#team_requirements").empty();
           $(".team-requirements #req_total").text(requirements.total);
           requirements.requirements.map(function (requirement) {
-            var req = "<div class=\"member-container bg-light\"><p> ".concat(Object.keys(requirement)[0], " ").concat(requirement[Object.keys(requirement)[0]], "</p></div>");
+            var req = "<div class=\"member-container bg-light\"><p> <span>".concat(Object.keys(requirement)[0], "</span> <span>").concat(requirement[Object.keys(requirement)[0]], "</span></p></div>");
             $("#team_requirements").append(req);
           });
         }
