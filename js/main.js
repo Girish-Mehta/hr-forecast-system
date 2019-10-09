@@ -1,3 +1,9 @@
-window.onload = function(){
-    $("#view").load('./views/login.html')
+import { auth } from "./auth";
+
+function handleShowLogin(){
+    auth.showLogin();
+}
+
+function handleShowRegister(){
+    auth.showRegister();
 }
