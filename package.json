@@ -1,0 +1,23 @@
+{
+  "name": "hr-forecast-system",
+  "version": "1.0.0",
+  "description": "The hackathon HR forecast system",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/girishmehta100/hr-forecast-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/girishmehta100/hr-forecast-system/issues"
+  },
+  "homepage": "https://gitlab.com/girishmehta100/hr-forecast-system#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  }
+}
