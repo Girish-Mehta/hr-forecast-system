@@ -1,5 +1,3 @@
-import { auth } from "./auth";
-
 function handleShowLogin(){
     auth.showLogin();
 }

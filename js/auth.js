@@ -1,6 +1,4 @@
-import { config } from "./constants"
-
-export const auth = {
+const auth = {
     showLogin: function(){
         $(`${config.mainView}`).load("./views/login.html");
         window.history.pushState({}, "Login", "login");

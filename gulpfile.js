@@ -1,5 +1,8 @@
 var gulp = require('gulp'),
-    sass = require('gulp-sass');
+    sass = require('gulp-sass'),
+    babel = require('gulp-babel'),
+    clean = require('gulp-clean');
+    concat = require('gulp-concat');
 
 gulp.task('scss', function () {
     return gulp.src('./scss/main.scss')
@@ -7,6 +10,18 @@ gulp.task('scss', function () {
     .pipe(gulp.dest('./scss/'));
 });
 
-gulp.task('default',['scss'], function () {
+gulp.task('pack-js', function () { 
+    gulp.src('./js/build/', {read: false})
+        .pipe(clean());   
+    return gulp.src(['./js/*.js'])
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
+        .pipe(concat('bundle.js'))
+        .pipe(gulp.dest('./js/build/'));
+});
+
+gulp.task('default',['scss', 'pack-js'], function () {
     gulp.watch('./scss/*.scss', ['scss']);
+    gulp.watch('./js/*.js', ['pack-js']);
 });

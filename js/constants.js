@@ -1,3 +1,3 @@
-export const config = {
+const config = {
     mainView : "#view"
 }
