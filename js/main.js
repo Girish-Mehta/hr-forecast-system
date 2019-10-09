@@ -21,7 +21,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         $("#login").hide();
         $("#myprofile, #logout").show();
         localStorage.setItem(config.isloggedin, "true");
-        $("#myprofile button").text(user.displayName)
+        $("#myprofile .user-name").text(user.displayName)
         showDashboard();
     } else {
         $("#login").show();

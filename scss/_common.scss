@@ -10,14 +10,16 @@ html,body{
 }
 .navbar{
     @media only screen and (min-width: 1024px) {
-        height: 80px;
-        box-shadow: 0 0 10px 3px grey;
+        height: 70px;
+        box-shadow: 0 0 6px 1px grey;
     }
     .navbar-brand{
         @media only screen and (min-width: 1024px) {
-            width: 55%;
             display: flex;
             justify-content: flex-end;
+        }
+        .text-lightgreen {
+            color: lightgreen;
         }
     }
     #my-nav{
@@ -27,9 +29,18 @@ html,body{
             }   
         }
     }
+    #loginBtn {
+        text-decoration: none;
+        color: grey;
+        font-size: .7rem;
+    }
+    .user-name {
+        margin: 0;
+    }
 }
 #view{
     @media only screen and (min-width: 1024px) {
         margin-top: 1rem;
     }
 }
+
