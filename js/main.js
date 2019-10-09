@@ -1,3 +1,17 @@
+// Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyDL-vEobMb_AeJ6NcEwqWzops9I9C0pR0w",
+    authDomain: "hrforecastsystem.firebaseapp.com",
+    databaseURL: "https://hrforecastsystem.firebaseio.com",
+    projectId: "hrforecastsystem",
+    storageBucket: "",
+    messagingSenderId: "645473796645",
+    appId: "1:645473796645:web:a3539d18ce83b3a73735cc",
+    measurementId: "G-Y7RKP3CTBQ"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
 function handleShowLogin(){
     auth.showLogin();
 }
