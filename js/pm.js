@@ -4,13 +4,13 @@ const pm = {
         var nor = $("#addrequirement_nor").val();
         this.getTeamName()
         .then(function(pm){
-            // firebase.database().ref(`requirements/${pm.val().project}/`)
-            // .set({
-            //     ...post,
-            //     uid: auth.currentUser.uid,
-            //     createdAt: timestamp * -1,
-            //     pid:`${timestamp}-${random}`
-            // });
+            firebase.database().ref(`requirements/${pm.val().project}/`)
+            .once("value", (snapshot)=>{
+                var requirements = snapshot.val();
+                requirements.requirements.push({requirement, nor})
+                firebase.database().ref(`requirements/${pm.val().project}/requirements`)
+                .set(requirements);
+            })
         })
     },
     getTeamName : function(){

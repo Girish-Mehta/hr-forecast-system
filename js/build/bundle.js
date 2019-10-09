@@ -146,13 +146,15 @@ var pm = {
   addRequirement: function addRequirement() {
     var requirement = $("#addrequirement_skills").val();
     var nor = $("#addrequirement_nor").val();
-    this.getTeamName().then(function (pm) {// firebase.database().ref(`requirements/${pm.val().project}/`)
-      // .set({
-      //     ...post,
-      //     uid: auth.currentUser.uid,
-      //     createdAt: timestamp * -1,
-      //     pid:`${timestamp}-${random}`
-      // });
+    this.getTeamName().then(function (pm) {
+      firebase.database().ref("requirements/".concat(pm.val().project, "/")).once("value", function (snapshot) {
+        var requirements = snapshot.val();
+        requirements.requirements.push({
+          requirement: requirement,
+          nor: nor
+        });
+        firebase.database().ref("requirements/".concat(pm.val().project, "/requirements")).set(requirements);
+      });
     });
   },
   getTeamName: function getTeamName() {
