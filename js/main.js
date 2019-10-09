@@ -43,6 +43,7 @@ function showDashboard() {
                 showHrDashboard();
             } else if(snapshot.val().designation == "PM") {
                 showPmDashboard();
+                
             }
             $("header").show();
         });
@@ -59,6 +60,7 @@ function showHrDashboard() {
 function showPmDashboard() {
     $("#view").load("../views/pm/landing.html");
     $("header").show();
+    pm.showTeamMemeber();
 }
 
 function showHome() {
