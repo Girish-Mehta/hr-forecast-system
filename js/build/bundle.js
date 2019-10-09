@@ -142,18 +142,20 @@ var urlRedirect = {
 };
 "use strict";
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var pm = {
   addRequirement: function addRequirement() {
     var requirement = $("#addrequirement_skills").val();
     var nor = $("#addrequirement_nor").val();
+    var req = "<div class=\"member-container bg-light\"><p> ".concat(requirement, " ").concat(nor, "</p></div>");
+    $("#team_requirements").append(req);
     this.getTeamName().then(function (pm) {
       firebase.database().ref("requirements/".concat(pm.val().project, "/")).once("value", function (snapshot) {
         var requirements = snapshot.val();
-        requirements.requirements.push({
-          requirement: requirement,
-          nor: nor
-        });
-        firebase.database().ref("requirements/".concat(pm.val().project, "/requirements")).set(requirements);
+        requirements.requirements.push(_defineProperty({}, requirement, nor));
+        firebase.database().ref("requirements/".concat(pm.val().project)).set(requirements);
+        $("#addrequirement .close").trigger("click");
       });
     });
   },
@@ -173,7 +175,7 @@ var pm = {
           $("#members").append(member);
         });
       });
-      firebase.database().ref("requirements/".concat(pm.val().project, "/")).on("value", function (snapshot) {
+      firebase.database().ref("requirements/".concat(pm.val().project, "/")).once("value", function (snapshot) {
         var requirements = snapshot.val();
 
         if (requirements.requirements.length) {
