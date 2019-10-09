@@ -1,0 +1,88 @@
+{
+  "accounts" : {
+    "lloyd" : {
+      "members" : {
+        "eid7" : "Abha",
+        "eid8" : "Jain",
+        "eid9" : "Anu"
+      },
+      "name" : "Lloyd"
+    },
+    "loreal" : {
+      "members" : {
+        "eid1" : "Vishal Sanserwal",
+        "eid2" : "Girish Gorilla",
+        "eid3" : "Khullar"
+      },
+      "name" : "Loreal"
+    },
+    "tesco" : {
+      "members" : {
+        "eid4" : "Vibha",
+        "eid5" : "Akashat",
+        "eid6" : "Akshat"
+      },
+      "name" : "Tesco"
+    }
+  },
+  "candidates" : {
+    "cid1" : {
+      "interviewDate" : 1570622925546,
+      "name" : "Pallavi",
+      "skills" : [ "Testing", "Mocha", "Chai" ],
+      "status" : "selected"
+    },
+    "cid2" : {
+      "interviewDate" : 1570623022450,
+      "name" : "Sanjeev",
+      "skills" : [ "Unix", "UI", "UX" ],
+      "status" : "rejected"
+    },
+    "cid3" : {
+      "interviewDate" : 1570623094279,
+      "name" : "Yuvraj",
+      "skills" : [ "JAVA", "Spring Boot", "React JS" ],
+      "status" : "scheduled"
+    }
+  },
+  "employees" : {
+    "aksjain" : {
+      "designation" : "HR",
+      "name" : "Akshat Jain"
+    },
+    "eid1" : "Vishal Sanserwal",
+    "eid2" : "Girish Gorilla",
+    "eid3" : "Khullar",
+    "eid4" : "Vibha",
+    "eid5" : "Akashat",
+    "eid6" : "Akshat",
+    "eid7" : "Abha",
+    "eid8" : "Jain",
+    "eid9" : "Anu",
+    "girmehta" : {
+      "designation" : "PM",
+      "name" : "Girish Mehta",
+      "project" : "tesco"
+    },
+    "shikhull" : {
+      "designation" : "HR",
+      "name" : "Shivam Khullar"
+    },
+    "vissanas" : {
+      "designation" : "PM",
+      "name" : "Vishal Sanserwal",
+      "project" : "lloyd"
+    }
+  },
+  "requirements" : {
+    "total": 8,
+    "lloyd" : {
+      "requirements": [ {"Java":1}, {"PhP":1}, {"Chai, Mocha":3} ],
+      "total": 2
+    },
+    "tesco" : {
+      "requirements": [ {"Testing":2}, {"Mocha": 1}, {"Chai, Mocha":3} ],
+      "total": 6
+    }
+  }
+}

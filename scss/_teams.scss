@@ -5,6 +5,7 @@
     margin: 1rem auto;
     &-title{
         margin:  0 0.5rem;
+        color: #e68a00;
     }
     .members{
         display: flex;
@@ -17,6 +18,19 @@
             display: flex;
             padding: 1rem;
             margin: 1rem 0.5rem;
+            .name {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+.addRequirementForm{
+    &-form{
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        button{
+            width: 100%;
         }
     }
 }
