@@ -15,10 +15,12 @@ firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+        console.log("trhdskshfkds");
         $("#login").hide();
         $("#myprofile, #logout").show();
         localStorage.setItem(config.isloggedin, "true");
         $("#myprofile button").text(user.displayName)
+        showDashboard();
     } else {
         $("#login").show();
         $("#myprofile, #logout").hide();
@@ -36,13 +38,15 @@ function handleShowRegister(){
 
 function showDashboard() {
     try {
-        var user = firebase.auth().currentUser;
-        if(user.email == "vissans@publicisgroupe.net") {
-            // HR user
-            $("#view").load("../views/hr/landing");
-        } else if(user.email == "girmehta@publicisgroupe.net"){
-            $("#view").load("../views/account/landing");
-        }
+        var userId = firebase.auth().currentUser.email.split("@")[0];
+        firebase.database().ref('/employees/' + userId).once('value').then(function(snapshot) {
+            if(snapshot.val().designation == "HR") {
+                showHrDashboard();
+            } else if(snapshot.val().designation == "PM") {
+                showPmDashboard();
+            }
+            $("header").show();
+        });
     } catch(e) {
         showHome();
     }
@@ -50,10 +54,12 @@ function showDashboard() {
 
 function showHrDashboard() {
     $("#view").load("../views/hr/landing.html");
+    $("header").show();
 }
 
 function showPmDashboard() {
     $("#view").load("../views/pm/landing.html");
+    $("header").show();
 }
 
 function showHome() {
