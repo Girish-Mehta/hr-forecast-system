@@ -14,6 +14,7 @@ const auth = {
     logout: function(){
       if(localStorage.getItem(config.isloggedin) === "true"){
         firebase.auth().signOut();
+        showHome();
       }
     }
 }

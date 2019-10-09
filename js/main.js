@@ -15,6 +15,9 @@ firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+        if(!user.email.split("@")[1] == "publicisgroupe.net") {
+            auth.logout();
+        }
         $("#login").hide();
         $("#myprofile, #logout").show();
         localStorage.setItem(config.isloggedin, "true");
@@ -43,6 +46,7 @@ function showDashboard() {
                 showHrDashboard();
             } else if(snapshot.val().designation == "PM") {
                 showPmDashboard();
+                
             }
             $("header").show();
         });
@@ -59,6 +63,7 @@ function showHrDashboard() {
 function showPmDashboard() {
     $("#view").load("../views/pm/landing.html");
     $("header").show();
+    pm.showTeamMemeber();
 }
 
 function showHome() {
