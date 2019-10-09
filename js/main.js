@@ -35,13 +35,16 @@ function handleShowRegister(){
 }
 
 function showDashboard() {
-    if(firebase.auth() != null) {
-        if(firebase.auth().currentUser.email == "vissans@publicisgroupe.net") {
+    try {
+        var user = firebase.auth().currentUser;
+        if(user.email == "vissans@publicisgroupe.net") {
             // HR user
             $("#view").load("../views/hr/landing");
-        } else if(firebase.auth().currentUser.email == "girmehta@publicisgroupe.net"){
+        } else if(user.email == "girmehta@publicisgroupe.net"){
             $("#view").load("../views/account/landing");
         }
+    } catch(e) {
+        showHome();
     }
 }
 
@@ -50,11 +53,22 @@ function showHrDashboard() {
 }
 
 function showPmDashboard() {
-    $("#view").load("../views/pm/landing.html");    
+    $("#view").load("../views/pm/landing.html");
+}
+
+function showHome() {
+    $("#view").load("../views/home.html");
+    $("header").hide();
 }
 
 window.onload = function () {  
     handleUrl(location.href);
+    try {
+        var user = firebase.auth().currentUser;
+        showDashboard();
+    } catch(e) {
+        showHome();
+    }
 }
 
 
@@ -80,6 +94,7 @@ function getUrlParams(url) {
 
 var urlRedirect = {
     login: auth.showLogin,
-    dashboard: showDashboard
+    dashboard: showDashboard,
+    home: showHome
 }
 
