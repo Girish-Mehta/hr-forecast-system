@@ -1,7 +1,8 @@
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
     babel = require('gulp-babel'),
-    clean = require('gulp-clean');
+    clean = require('gulp-clean'),
+    minify = require('gulp-minify'),
     concat = require('gulp-concat');
 
 gulp.task('scss', function () {
@@ -18,6 +19,7 @@ gulp.task('pack-js', function () {
             presets: ['@babel/env']
         }))
         .pipe(concat('bundle.js'))
+        .pipe(minify())
         .pipe(gulp.dest('./js/build/'));
 });
 
