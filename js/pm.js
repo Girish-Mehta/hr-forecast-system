@@ -2,14 +2,17 @@ const pm = {
     addRequirement: function(){
         var requirement = $("#addrequirement_skills").val();
         var nor = $("#addrequirement_nor").val();
+        var req = `<div class="member-container bg-light"><p> ${requirement} ${nor}</p></div>`
+        $("#team_requirements").append(req);
         this.getTeamName()
         .then(function(pm){
             firebase.database().ref(`requirements/${pm.val().project}/`)
             .once("value", (snapshot)=>{
                 var requirements = snapshot.val();
-                requirements.requirements.push({requirement, nor})
-                firebase.database().ref(`requirements/${pm.val().project}/requirements`)
+                requirements.requirements.push({[requirement]:nor});
+                firebase.database().ref(`requirements/${pm.val().project}`)
                 .set(requirements);
+                $("#addrequirement .close").trigger("click");
             })
         })
     },
@@ -35,7 +38,7 @@ const pm = {
                 })
             })
             firebase.database().ref(`requirements/${pm.val().project}/`)
-            .on("value", (snapshot)=>{
+            .once("value", (snapshot)=>{
                 var requirements = snapshot.val();
                 if(requirements.requirements.length){
                     $("#team_requirements").append(`<h4 class="team-members-title">Requirements</h4>`);
