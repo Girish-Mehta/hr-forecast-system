@@ -1081,7 +1081,7 @@ var hr = {
       var candidates = snapshot.val();
       Object.keys(candidates).map(function (candidate) {
         if (candidates[candidate].status === "scheduled") {
-          var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_schd active p-2\">\n                    <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">".concat(candidates[candidate].name, "</h5>\n                        <p class=\"card-text\">Skills: ").concat(candidates[candidate].skills.join(","), "</p>\n                        <p class=\"card-text text-secondary\">Interview at: ").concat(candidates[candidate].interviewDate, "</p>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.selectCandidate(").concat(candidate, ")\" class=\"btn btn-primary\">Selected</a>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.rejectCandidate(").concat(candidate, ")\" class=\"btn btn-danger\">Rejected</a>\n                    </div>\n                    </div>\n                </div>");
+          var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_schd active p-2\">\n                    <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">".concat(candidates[candidate].name, "</h5>\n                        <p class=\"card-text\">Skills: ").concat(candidates[candidate].skills.join(","), "</p>\n                        <p class=\"card-text text-secondary\">Interview at: ").concat(candidates[candidate].interviewDate, "</p>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.selectCandidate(").concat(candidate, ")\" class=\"btn btn-primary\">Select</a>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.rejectCandidate(").concat(candidate, ")\" class=\"btn btn-danger\">Reject</a>\n                    </div>\n                    </div>\n                </div>");
         } else if (candidates[candidate].status === "selected") {
           var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_selected p-2\">\n                    <div class=\"card\">\n                        <div class=\"card-body\">\n                            <h5 class=\"card-title\">".concat(candidates[candidate].name, "</h5>\n                            <p class=\"card-text\">Skills: ").concat(candidates[candidate].skills.join(","), "</p>\n                            <p class=\"card-text\">Status: <span class=\"text-success\">Selected</span></p>\n                        </div>\n                    </div>\n                </div>");
         } else {
@@ -1147,7 +1147,7 @@ var hr = {
           }
 
           $("#account_list").append(accountUI);
-          $(".account_card:first-child .card").css('background-color', '#22a8b8');
+          $(".account_card:first-child .card").css('background-color', 'lightgreen');
 
           if (index == 0) {
             $(".requirement-list").append(requirementList);
@@ -1162,7 +1162,7 @@ var hr = {
   },
   selectAccount: function selectAccount(index) {
     $(".account_card .card").css('background-color', '#fff');
-    $(".account_card:nth-child(".concat(index + 1, ") .card")).css('background-color', '#22a8b8');
+    $(".account_card:nth-child(".concat(index + 1, ") .card")).css('background-color', 'lightgreen');
     $(".requirement-list").html("");
     firebase.database().ref('accounts/').once("value", function (snapshot) {
       var accounts = snapshot.val();
@@ -1226,7 +1226,7 @@ var hr = {
       createdAt: cid * -1
     };
     firebase.database().ref("candidates/".concat(cid)).set(cData);
-    var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_schd active p-2\">\n                    <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">".concat(cData.name, "</h5>\n                        <p class=\"card-text\">Skills: ").concat(cData.skills.join(","), "</p>\n                        <p class=\"card-text text-secondary\">Interview at: ").concat(cData.interviewDate, "</p>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.selectCandidate(").concat(cid, ")\" class=\"btn btn-primary\">Selected</a>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.rejectCandidate(").concat(cid, ")\" class=\"btn btn-danger\">Rejected</a>\n                    </div>\n                    </div>\n                </div>");
+    var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_schd active p-2\">\n                    <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">".concat(cData.name, "</h5>\n                        <p class=\"card-text\">Skills: ").concat(cData.skills.join(","), "</p>\n                        <p class=\"card-text text-secondary\">Interview at: ").concat(cData.interviewDate, "</p>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.selectCandidate(").concat(cid, ")\" class=\"btn btn-primary\">Select</a>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.rejectCandidate(").concat(cid, ")\" class=\"btn btn-danger\">Reject</a>\n                    </div>\n                    </div>\n                </div>");
     $("#interview_candidates").prepend(candidateUI);
     $("#addCandidate-name").val("");
     $("#addCandidate-skills").val("");

@@ -17,9 +17,27 @@
         }
     }
     .nav-link{
-        a{
-            color: lightgreen;
+        color: lightgreen;
+        font-weight: 500;
+        &.active{
+            background: lightgreen;
+            color: #000;
         }
+    }
+    .interview-topbar{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .addnewcandidate{
+            color: lightgreen;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    }
+    .btn-primary{
+        color: #000;
+        background: lightgreen;
+        border-color: lightgreen;
     }
 }
 

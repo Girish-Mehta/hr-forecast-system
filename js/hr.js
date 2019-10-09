@@ -14,8 +14,8 @@ const hr = {
                         <h5 class="card-title">${candidates[candidate].name}</h5>
                         <p class="card-text">Skills: ${candidates[candidate].skills.join(",")}</p>
                         <p class="card-text text-secondary">Interview at: ${candidates[candidate].interviewDate}</p>
-                        <a href="javascript:void(0)" onclick="hr.selectCandidate(${candidate})" class="btn btn-primary">Selected</a>
-                        <a href="javascript:void(0)" onclick="hr.rejectCandidate(${candidate})" class="btn btn-danger">Rejected</a>
+                        <a href="javascript:void(0)" onclick="hr.selectCandidate(${candidate})" class="btn btn-primary">Select</a>
+                        <a href="javascript:void(0)" onclick="hr.rejectCandidate(${candidate})" class="btn btn-danger">Reject</a>
                     </div>
                     </div>
                 </div>`
@@ -116,7 +116,7 @@ const hr = {
                         }
                     }
                     $("#account_list").append(accountUI);
-                    $(".account_card:first-child .card").css('background-color','#22a8b8');
+                    $(".account_card:first-child .card").css('background-color','lightgreen');
                     if(index == 0){
                         $(".requirement-list").append(requirementList);
                     }
@@ -130,7 +130,7 @@ const hr = {
     },
     selectAccount: function(index){
         $(".account_card .card").css('background-color','#fff');
-        $(`.account_card:nth-child(${index+1}) .card`).css('background-color','#22a8b8');
+        $(`.account_card:nth-child(${index+1}) .card`).css('background-color','lightgreen');
         $(".requirement-list").html("");
         
         firebase.database().ref('accounts/')
@@ -203,8 +203,8 @@ const hr = {
                         <h5 class="card-title">${cData.name}</h5>
                         <p class="card-text">Skills: ${cData.skills.join(",")}</p>
                         <p class="card-text text-secondary">Interview at: ${cData.interviewDate}</p>
-                        <a href="javascript:void(0)" onclick="hr.selectCandidate(${cid})" class="btn btn-primary">Selected</a>
-                        <a href="javascript:void(0)" onclick="hr.rejectCandidate(${cid})" class="btn btn-danger">Rejected</a>
+                        <a href="javascript:void(0)" onclick="hr.selectCandidate(${cid})" class="btn btn-primary">Select</a>
+                        <a href="javascript:void(0)" onclick="hr.rejectCandidate(${cid})" class="btn btn-danger">Reject</a>
                     </div>
                     </div>
                 </div>`
