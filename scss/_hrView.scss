@@ -8,4 +8,17 @@
     .requirement_list_container{
         border-left:1px solid #000;
     }
+    .requirement-list {
+        .member-container {
+            p {
+                display: flex;
+                justify-content: space-between;    
+            }
+        }
+    }
+}
+
+#requirement_list_container {
+    display: flex;
+    justify-content: space-around;
 }

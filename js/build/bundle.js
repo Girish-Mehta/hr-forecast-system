@@ -1112,7 +1112,7 @@ var hr = {
             if (index == 0) {
               var requirementList = "<h6>Requirement Details</h6>";
               accountRequirement.requirements.map(function (requirement) {
-                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> ".concat(Object.keys(requirement)[0], " ").concat(requirement[Object.keys(requirement)[0]], "</p></div>");
+                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> <span>".concat(Object.keys(requirement)[0], "</span> <span>").concat(requirement[Object.keys(requirement)[0]], "</span></p></div>");
               }); //    for(let i =0; i<accountRequirement.requirements.length; i++){
               //        requirementList = requirementList + `<div>${accountRequirement.requirements[i]} : 1</div>`;
               //    }
@@ -1153,8 +1153,36 @@ var hr = {
 
             if (accountRequirement !== null) {
               var requirementList = "<h6>Requirement Details</h6>";
+              var available = "<h6>Availability</h6>";
+              var availability = 0;
+              var availableStatusBg = '';
               accountRequirement.requirements.map(function (requirement) {
-                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> ".concat(Object.keys(requirement)[0], " ").concat(requirement[Object.keys(requirement)[0]], "</p></div>");
+                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> <span>".concat(Object.keys(requirement)[0], "</span> <span>").concat(requirement[Object.keys(requirement)[0]], "</span></p></div>");
+                var reqSkill = Object.keys(requirement)[0];
+                availability = 0;
+                availableStatusBg = '';
+                console.log("Looking for: ", reqSkill);
+                firebase.database().ref("candidates/").once("value", function (snapshot) {
+                  console.log("Working: ");
+                  var candidates = snapshot.val();
+                  Object.keys(candidates).map(function (candidate) {
+                    if (candidates[candidate].status === "selected") {
+                      if (candidates[candidate].skills[0] == reqSkill) {
+                        console.log("found: ", candidates[candidate].skills[0]);
+                        availability += 1;
+                      }
+                    }
+
+                    if (availability < requirement[Object.keys(requirement)[0]]) {
+                      availableStatusBg = 'bg-danger text-light text-center';
+                    } else {
+                      availableStatusBg = 'bg-success text-light text-center';
+                    }
+                  });
+                  available = "<div class=\"member-availability ".concat(availableStatusBg, "\"><p>").concat(availability, "</p></div>");
+                  $(".availability-list-result").prepend(available);
+                });
+                console.log("Available: ", available);
               }); //   for(let i =0; i<accountRequirement.requirements.length; i++){
               //     requirementList = requirementList + `<div>${accountRequirement.requirements[i][Object.keys(accountRequirement.requirements[i])[0]]} : 1</div>`;
               // }
@@ -1163,6 +1191,7 @@ var hr = {
             }
 
             $(".requirement-list").append(requirementList);
+            $(".availability-list-result").empty();
           });
         }
       });
