@@ -5,9 +5,25 @@
             display: block;
         }
     }
+    .requirement_list_container{
+        border-left:1px solid #000;
+    }
+    .requirement-list {
+        .member-container {
+            p {
+                display: flex;
+                justify-content: space-between;    
+            }
+        }
+    }
     .nav-link{
         a{
             color: lightgreen;
         }
     }
+}
+
+#requirement_list_container {
+    display: flex;
+    justify-content: space-around;
 }

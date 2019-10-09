@@ -1098,6 +1098,124 @@ var hr = {
     $("#".concat(event.target.id)).addClass("active");
     $(".".concat(event.target.id)).addClass("active");
   },
+  showAccounts: function showAccounts() {
+    firebase.database().ref('accounts/').once("value", function (snapshot) {
+      var accounts = snapshot.val();
+      Object.keys(accounts).map(function (account, index) {
+        firebase.database().ref("requirements/".concat(account)).once("value", function (snapshot) {
+          var accountRequirement = snapshot.val();
+          var accountName = accounts[account].name;
+
+          if (accountRequirement !== null) {
+            var accountUI = "<div class=\"col-sm-12 account_card p-2\" onclick=\"hr.selectAccount(".concat(index, ")\">\n                            <div class=\"card\">\n                                <div class=\"card-body\">\n                                    <h5 class=\"card-title\">").concat(accountName, "</h5>\n                                    <p class=\"card-text\">Requirement Total: ").concat(accountRequirement['total'], "</p>\n                                </div>\n                            </div>\n                        </div>");
+
+            if (index == 0) {
+              var requirementList = "<h6>Requirement Details</h6>";
+              accountRequirement.requirements.map(function (requirement) {
+                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> <span>".concat(Object.keys(requirement)[0], "</span> <span>").concat(requirement[Object.keys(requirement)[0]], "</span></p></div>");
+                var reqSkill = Object.keys(requirement)[0];
+                var availability = 0;
+                var availableStatusBg = '';
+                var available = '';
+                firebase.database().ref("candidates/").once("value", function (snapshot) {
+                  var candidates = snapshot.val();
+                  Object.keys(candidates).map(function (candidate) {
+                    if (candidates[candidate].status === "selected") {
+                      if (candidates[candidate].skills[0].toLowerCase() == reqSkill.toLowerCase()) {
+                        availability += 1;
+                      }
+                    }
+
+                    if (availability < requirement[Object.keys(requirement)[0]]) {
+                      availableStatusBg = 'bg-danger text-light text-center';
+                    } else {
+                      availableStatusBg = 'bg-success text-light text-center';
+                    }
+                  });
+                  available = "<div class=\"member-availability ".concat(availableStatusBg, "\"><p>").concat(availability, "</p></div>");
+                  $(".availability-list-result").prepend(available);
+                  availability = 0;
+                });
+              });
+            }
+          } else {
+            var accountUI = "<div class=\"col-sm-12 account_card p-2\" onclick=\"hr.selectAccount(".concat(index, ")\">\n                            <div class=\"card\">\n                                <div class=\"card-body\">\n                                <h5 class=\"card-title\">").concat(accountName, "</h5>\n                                <p class=\"card-text\">Requirement Total: 0</p>\n                                </div>\n                            </div>\n                        </div>");
+
+            if (index == 0) {
+              var requirementList = "<h6>Requirement Details</h6><div>Currently there is no requirement</div>";
+            }
+          }
+
+          $("#account_list").append(accountUI);
+          $(".account_card:first-child .card").css('background-color', '#22a8b8');
+
+          if (index == 0) {
+            $(".requirement-list").append(requirementList);
+          }
+        });
+      });
+    });
+  },
+  resetAccountContent: function resetAccountContent() {
+    $("#account_list").html("");
+    $(".requirement-list").html("");
+  },
+  selectAccount: function selectAccount(index) {
+    $(".account_card .card").css('background-color', '#fff');
+    $(".account_card:nth-child(".concat(index + 1, ") .card")).css('background-color', '#22a8b8');
+    $(".requirement-list").html("");
+    firebase.database().ref('accounts/').once("value", function (snapshot) {
+      var accounts = snapshot.val();
+      Object.keys(accounts).map(function (account, currentIndex) {
+        if (index == currentIndex) {
+          firebase.database().ref("requirements/".concat(account)).once("value", function (snapshot) {
+            var accountRequirement = snapshot.val();
+            var accountName = accounts[account].name;
+
+            if (accountRequirement !== null) {
+              var requirementList = "<h6>Requirement Details</h6>";
+              var available = "<h6>Availability</h6>";
+              var availability = 0;
+              var availableStatusBg = '';
+              accountRequirement.requirements.map(function (requirement) {
+                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> <span>".concat(Object.keys(requirement)[0], "</span> <span>").concat(requirement[Object.keys(requirement)[0]], "</span></p></div>");
+                var reqSkill = Object.keys(requirement)[0];
+                availability = 0;
+                availableStatusBg = '';
+                firebase.database().ref("candidates/").once("value", function (snapshot) {
+                  var candidates = snapshot.val();
+                  Object.keys(candidates).map(function (candidate) {
+                    if (candidates[candidate].status === "selected") {
+                      if (candidates[candidate].skills[0].toLowerCase() == reqSkill.toLowerCase()) {
+                        availability += 1;
+                      }
+                    }
+
+                    if (availability < requirement[Object.keys(requirement)[0]]) {
+                      availableStatusBg = 'bg-danger text-light text-center';
+                    } else {
+                      availableStatusBg = 'bg-success text-light text-center';
+                    }
+                  });
+                  available = "<div class=\"member-availability ".concat(availableStatusBg, "\"><p>").concat(availability, "</p></div>");
+                  $(".availability-list-result").prepend(available);
+                  availability = 0;
+                });
+              }); //   for(let i =0; i<accountRequirement.requirements.length; i++){
+              //     requirementList = requirementList + `<div>${accountRequirement.requirements[i][Object.keys(accountRequirement.requirements[i])[0]]} : 1</div>`;
+              // }
+            } else {
+              var requirementList = "<h6>Requirement Details</h6><div>Currently there is no requirement</div>";
+            }
+
+            $(".requirement-list").append(requirementList);
+            $(".availability-list-result").empty();
+            availability = 0;
+          });
+        }
+      });
+    });
+  },
   addCandidate: function addCandidate() {
     var cid = new Date().getTime();
     var cData = {
@@ -1110,6 +1228,9 @@ var hr = {
     firebase.database().ref("candidates/".concat(cid)).set(cData);
     var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_schd active p-2\">\n                    <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">".concat(cData.name, "</h5>\n                        <p class=\"card-text\">Skills: ").concat(cData.skills.join(","), "</p>\n                        <p class=\"card-text text-secondary\">Interview at: ").concat(cData.interviewDate, "</p>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.selectCandidate(").concat(cid, ")\" class=\"btn btn-primary\">Selected</a>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.rejectCandidate(").concat(cid, ")\" class=\"btn btn-danger\">Rejected</a>\n                    </div>\n                    </div>\n                </div>");
     $("#interview_candidates").prepend(candidateUI);
+    $("#addCandidate-name").val("");
+    $("#addCandidate-skills").val("");
+    $("#addCandidate-date").val("");
     $("#addCandidate .close").trigger("click");
   },
   selectCandidate: function selectCandidate(uid) {
