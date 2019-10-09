@@ -2,23 +2,33 @@
 
 var auth = {
   showLogin: function showLogin() {
-    var provider = new firebase.auth.OAuthProvider('microsoft.com');
-    firebase.auth().signInWithPopup(provider).then(function (result) {
-      // User is signed in.
-      // IdP data available in result.additionalUserInfo.profile.
-      // OAuth access token can also be retrieved:
-      // result.credential.accessToken
-      console.log("Success: " + JSON.stringify(result));
-    })["catch"](function (error) {
-      // Handle error.
-      console.log("error" + error);
-    });
+    if (!firebase.auth().currentUser) {
+      var provider = new firebase.auth.OAuthProvider('microsoft.com');
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        $("#login").hide();
+        $("#myprofile, #logout").show();
+        localStorage.setItem(config.isloggedin, "true");
+        console.log("Success: " + result);
+      })["catch"](function (error) {
+        // Handle error.
+        console.log("error" + error);
+      });
+    }
+  },
+  logout: function logout() {
+    if (localStorage.getItem(config.isloggedin) === "true") {
+      firebase.auth().signOut();
+      localStorage.setItem(config.isloggedin, "false");
+      $("#login").show();
+      $("#myprofile, #logout").hide();
+    }
   }
 };
 "use strict";
 
 var config = {
-  mainView: "#view"
+  mainView: "#view",
+  isloggedin: "isloggedin"
 };
 "use strict";
 
@@ -46,6 +56,13 @@ function handleShowRegister() {
 
 window.onload = function () {
   handleUrl(location.href);
+  $("#login").show();
+  $("#myprofile, #logout").hide();
+
+  if (localStorage.getItem(config.isloggedin) === "true") {
+    $("#login").hide();
+    $("#myprofile, #logout").show();
+  }
 };
 
 function handleUrl(url) {
@@ -55,14 +72,6 @@ function handleUrl(url) {
     var urlParts = url.split("/");
     var navigate = urlParts.pop();
     var urlToOpen = urlRedirect[navigate];
-
-    if (url.includes("template")) {
-      urlRedirect["userCv"](urlParts[urlParts.length - 1], navigate);
-    } else if (urlRedirect[navigate]) {
-      urlToOpen();
-    } else {
-      urlRedirect.landing();
-    }
   } else {
     urlRedirect[params.mode](params.oobCode);
   }

@@ -22,7 +22,12 @@ function handleShowRegister(){
 
 window.onload = function () {  
     handleUrl(location.href);
-    
+    $("#login").show();
+    $("#myprofile, #logout").hide();
+    if(localStorage.getItem(config.isloggedin) === "true"){
+        $("#login").hide();
+        $("#myprofile, #logout").show();
+    }
 }
 
 
@@ -32,14 +37,6 @@ function handleUrl(url) {
         var urlParts = url.split("/");
         var navigate = urlParts.pop()
         var urlToOpen = urlRedirect[navigate]
-        if(url.includes("template")){
-            urlRedirect["userCv"](urlParts[urlParts.length-1],navigate);
-        }     
-        else if (urlRedirect[navigate]) {
-            urlToOpen()
-        } else {
-            urlRedirect.landing();
-        }
     }
     else {
         urlRedirect[params.mode](params.oobCode);

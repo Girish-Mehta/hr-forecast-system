@@ -1,3 +1,4 @@
 const config = {
-    mainView : "#view"
+    mainView : "#view",
+    isloggedin: "isloggedin"
 }

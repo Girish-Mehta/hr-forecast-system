@@ -76,7 +76,7 @@
                 <div id="my-nav" class="collapse navbar-collapse">
                     <ul class="navbar-nav ml-auto ">
     
-                            <li class="dropdown myprofile px-2">
+                            <li id="myprofile" class="dropdown myprofile px-2">
                                 <button type="button" class=" btn btn-light dropdown-toggle px-2 " data-toggle="dropdown">
                                     My Profile
                                 </button>
@@ -85,11 +85,11 @@
                                 </div>
                             </li>
     
-                        <li class="nav-item active pr-5 login">
-                            <button type='button' class=" cvmaker-btn btn btn-light rounded" id="loginBtn" onclick="handleShowLogin()">Login</button>
+                        <li id="login" class="nav-item active pr-5 login">
+                            <button type='button' class=" cvmaker-btn btn btn-light rounded" id="loginBtn" onclick="auth.showLogin()">Login</button>
                         </li>
-                        <li class="nav-item active pr-5 logout">
-                            <button type='button' class=" cvmaker-danger-btn btn btn-light rounded" onclick="handleLogout()" id="loginBtn">Logout</button>
+                        <li id="logout" class="nav-item active pr-5 logout">
+                            <button type='button' class=" cvmaker-danger-btn btn btn-light rounded" onclick="auth.logout()" id="loginBtn">Logout</button>
                         </li>
                     </ul>
                 </div>
