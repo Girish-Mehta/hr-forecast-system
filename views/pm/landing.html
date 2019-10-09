@@ -1,13 +1,24 @@
+<div class="panel-row">
+    <div class="team-title team-members-title active">
+        <p onclick="pm.showTeamMemeber()">My Team</p>
+    </div>
+    <div class="team-title team-requirements-title px-4">
+        <p onclick="pm.showRequirements()">Requirement</p>
+    </div>
+</div>
 <div class="team-members row">
-    <h5 class="team-members-title">Members</h5>
     <div id="members" class="members card-deck">
         
+    </div>
+</div>
+<div class="team-requirements">
+    <div class="info-container">
+        <div class="add-req-ctr"><i class="fa fa-plus-circle" aria-hidden="true"></i><p class="add-btn" data-toggle="modal" data-target="#addrequirement">Add New Requirement</p></div>
+        <div class="req_total" role="alert"> Total requirements: <span id="req_total"></span></div>
     </div>
     <div id="team_requirements" class="team_requirements">
         
     </div>
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addrequirement">Add New
-        Requirement</button>
 </div>
 <div id="addrequirement" class="addRequirementForm-container modal fade" role="dialog">
     <div class="modal-dialog">
