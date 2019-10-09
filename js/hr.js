@@ -162,6 +162,9 @@ const hr = {
                     </div>
                 </div>`
         $("#interview_candidates").prepend(candidateUI);
+        $("#addCandidate-name").val("");
+        $("#addCandidate-skills").val("");
+        $("#addCandidate-date").val("");
         $("#addCandidate .close").trigger("click");
     },
     selectCandidate: function(uid){
