@@ -7,7 +7,8 @@ function handleShowRegister(){
 }
 
 window.onload = function () {  
-    handleUrl(location.href)
+    handleUrl(location.href);
+    
 }
 
 
