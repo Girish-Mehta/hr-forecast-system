@@ -89,6 +89,7 @@ function showHrDashboard() {
 function showPmDashboard() {
   $("#view").load("../views/pm/landing.html");
   $("header").show();
+  pm.showTeamMemeber();
 }
 
 function showHome() {
@@ -137,4 +138,35 @@ var urlRedirect = {
   login: auth.showLogin,
   dashboard: showDashboard,
   home: showHome
+};
+"use strict";
+
+var pm = {
+  addRequirement: function addRequirement() {// $("#members").append()
+  },
+  getTeamName: function getTeamName() {
+    return firebase.database().ref("employees/".concat(firebase.auth().currentUser.email.split("@")[0])).once("value", function (snapshot) {
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else return null;
+    });
+  },
+  showTeamMemeber: function showTeamMemeber() {
+    this.getTeamName().then(function (pm) {
+      firebase.database().ref("accounts/".concat(pm.val().project, "/members")).once("value", function (snapshot) {
+        var members = snapshot.val();
+        Object.keys(members).map(function (key, idx) {
+          var member = "<div class=\"member-container bg-light\"><h4 class=\"name\">".concat(members[key], "</h4></div>");
+          $("#members").append(member);
+        });
+      }); // firebase.database().ref(`requirements/${pm.val().project}/`)
+      // .once("value", (snapshot)=>{
+      //     var members = snapshot.val()
+      //     Object.keys(members).map(function(key, idx){
+      //         var member = `<div class="member-container bg-light"><h4 class="name">${members[key]}</h4></div>`
+      //         $("#members").append(member);
+      //     })
+      // })
+    });
+  }
 };
