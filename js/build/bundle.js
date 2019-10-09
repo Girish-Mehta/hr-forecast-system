@@ -138,7 +138,17 @@ var urlRedirect = {
 "use strict";
 
 var pm = {
-  addRequirement: function addRequirement() {// $("#members").append()
+  addRequirement: function addRequirement() {
+    var requirement = $("#addrequirement_skills").val();
+    var nor = $("#addrequirement_nor").val();
+    this.getTeamName().then(function (pm) {// firebase.database().ref(`requirements/${pm.val().project}/`)
+      // .set({
+      //     ...post,
+      //     uid: auth.currentUser.uid,
+      //     createdAt: timestamp * -1,
+      //     pid:`${timestamp}-${random}`
+      // });
+    });
   },
   getTeamName: function getTeamName() {
     return firebase.database().ref("employees/".concat(firebase.auth().currentUser.email.split("@")[0])).once("value", function (snapshot) {
@@ -152,17 +162,22 @@ var pm = {
       firebase.database().ref("accounts/".concat(pm.val().project, "/members")).once("value", function (snapshot) {
         var members = snapshot.val();
         Object.keys(members).map(function (key, idx) {
-          var member = "<div class=\"member-container bg-light\"><h4 class=\"name\">".concat(members[key], "</h4></div>");
+          var member = "<div class=\"member-container bg-light\"><p class=\"name\">".concat(members[key], "</p></div>");
           $("#members").append(member);
         });
-      }); // firebase.database().ref(`requirements/${pm.val().project}/`)
-      // .once("value", (snapshot)=>{
-      //     var members = snapshot.val()
-      //     Object.keys(members).map(function(key, idx){
-      //         var member = `<div class="member-container bg-light"><h4 class="name">${members[key]}</h4></div>`
-      //         $("#members").append(member);
-      //     })
-      // })
+      });
+      firebase.database().ref("requirements/".concat(pm.val().project, "/")).on("value", function (snapshot) {
+        var requirements = snapshot.val();
+
+        if (requirements.requirements.length) {
+          $("#team_requirements").append("<h4 class=\"team-members-title\">Requirements</h4>");
+          $("#team_requirements").append("<div class=\"alert alert-primary\" role=\"alert\">\n                    Total requirements: ".concat(requirements.total, "\n                  </div>"));
+          requirements.requirements.map(function (requirement) {
+            var req = "<div class=\"member-container bg-light\"><p> ".concat(Object.keys(requirement)[0], " ").concat(requirement[Object.keys(requirement)[0]], "</p></div>");
+            $("#team_requirements").append(req);
+          });
+        }
+      });
     });
   }
 };

@@ -1,8 +1,17 @@
 const pm = {
     addRequirement: function(){
-
-        
-        // $("#members").append()
+        var requirement = $("#addrequirement_skills").val();
+        var nor = $("#addrequirement_nor").val();
+        this.getTeamName()
+        .then(function(pm){
+            // firebase.database().ref(`requirements/${pm.val().project}/`)
+            // .set({
+            //     ...post,
+            //     uid: auth.currentUser.uid,
+            //     createdAt: timestamp * -1,
+            //     pid:`${timestamp}-${random}`
+            // });
+        })
     },
     getTeamName : function(){
         return firebase.database().ref(`employees/${firebase.auth().currentUser.email.split("@")[0]}`)
@@ -21,18 +30,24 @@ const pm = {
             .once("value", (snapshot)=>{
                 var members = snapshot.val()
                 Object.keys(members).map(function(key, idx){
-                    var member = `<div class="member-container bg-light"><h4 class="name">${members[key]}</h4></div>`
+                    var member = `<div class="member-container bg-light"><p class="name">${members[key]}</p></div>`
                     $("#members").append(member);
                 })
             })
-            // firebase.database().ref(`requirements/${pm.val().project}/`)
-            // .once("value", (snapshot)=>{
-            //     var members = snapshot.val()
-            //     Object.keys(members).map(function(key, idx){
-            //         var member = `<div class="member-container bg-light"><h4 class="name">${members[key]}</h4></div>`
-            //         $("#members").append(member);
-            //     })
-            // })
+            firebase.database().ref(`requirements/${pm.val().project}/`)
+            .on("value", (snapshot)=>{
+                var requirements = snapshot.val();
+                if(requirements.requirements.length){
+                    $("#team_requirements").append(`<h4 class="team-members-title">Requirements</h4>`);
+                    $("#team_requirements").append(`<div class="alert alert-primary" role="alert">
+                    Total requirements: ${requirements.total}
+                  </div>`)
+                    requirements.requirements.map(function(requirement){
+                        var req = `<div class="member-container bg-light"><p> ${Object.keys(requirement)[0]} ${requirement[Object.keys(requirement)[0]]}</p></div>`
+                        $("#team_requirements").append(req);
+                    })
+                }
+            })
         })
     }
 }
