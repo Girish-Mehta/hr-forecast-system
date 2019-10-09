@@ -3,8 +3,7 @@
 var auth = {
   showLogin: function showLogin() {
     var provider = new firebase.auth.OAuthProvider('microsoft.com');
-    firebase.auth().signInWithRedirect(provider);
-    firebase.auth().getRedirectResult().then(function (result) {
+    firebase.auth().signInWithPopup(provider).then(function (result) {
       // User is signed in.
       // IdP data available in result.additionalUserInfo.profile.
       // OAuth access token can also be retrieved:
