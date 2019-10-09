@@ -13,6 +13,7 @@ var auth = {
   logout: function logout() {
     if (localStorage.getItem(config.isloggedin) === "true") {
       firebase.auth().signOut();
+      showHome();
     }
   }
 };
