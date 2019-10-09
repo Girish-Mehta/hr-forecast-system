@@ -56,7 +56,7 @@ const pm = {
                     $("#team_requirements").empty();
                     $(".team-requirements #req_total").text(requirements.total);
                     requirements.requirements.map(function(requirement){
-                        var req = `<div class="member-container bg-light"><p> ${Object.keys(requirement)[0]} ${requirement[Object.keys(requirement)[0]]}</p></div>`
+                        var req = `<div class="member-container bg-light"><p> <span>${Object.keys(requirement)[0]}</span> <span>${requirement[Object.keys(requirement)[0]]}</span></p></div>`
                         $("#team_requirements").append(req);
                     })
                 }
