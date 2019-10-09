@@ -15,7 +15,6 @@ firebase.initializeApp(firebaseConfig);
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        console.log("trhdskshfkds");
         $("#login").hide();
         $("#myprofile, #logout").show();
         localStorage.setItem(config.isloggedin, "true");
