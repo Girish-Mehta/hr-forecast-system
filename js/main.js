@@ -9,8 +9,22 @@ var firebaseConfig = {
     appId: "1:645473796645:web:a3539d18ce83b3a73735cc",
     measurementId: "G-Y7RKP3CTBQ"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        $("#login").hide();
+        $("#myprofile, #logout").show();
+        localStorage.setItem(config.isloggedin, "true");
+        $("#myprofile button").text(user.displayName)
+    } else {
+        $("#login").show();
+        $("#myprofile, #logout").hide();
+        localStorage.setItem(config.isloggedin, "false");
+    }
+  });
 
 function handleShowLogin(){
     auth.showLogin();
@@ -22,12 +36,6 @@ function handleShowRegister(){
 
 window.onload = function () {  
     handleUrl(location.href);
-    $("#login").show();
-    $("#myprofile, #logout").hide();
-    if(localStorage.getItem(config.isloggedin) === "true"){
-        $("#login").hide();
-        $("#myprofile, #logout").show();
-    }
 }
 
 
