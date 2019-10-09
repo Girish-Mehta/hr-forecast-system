@@ -5,10 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>HR ForeCast System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="view">
-        
-    </div>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-light ">
+                <a class="navbar-brand" href="javascript:showSelectTemplate()">
+                    <p class="h1">HRForecast</p>
+                </a>
+                <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="my-nav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto ">
+    
+                            <li class="dropdown myprofile px-2">
+                                <button type="button" class=" btn btn-light dropdown-toggle px-2 " data-toggle="dropdown">
+                                    My Profile
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item rounded " href="#">Edit Profile</a>
+                                </div>
+                            </li>
+    
+                        <li class="nav-item active pr-5 login">
+                            <button type='button' class=" cvmaker-btn btn btn-light rounded" id="loginBtn" onclick="showLoginForm()">Login/SignUp</button>
+                        </li>
+                        <li class="nav-item active pr-5 logout">
+                            <button type='button' class=" cvmaker-danger-btn btn btn-light rounded" onclick="handleLogout()" id="loginBtn">Logout</button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>        
+    </header>
+    <main id="view">
+
+    </main>
+    <footer>
+
+    </footer>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-auth.js"></script>
 </body>
 </html>
