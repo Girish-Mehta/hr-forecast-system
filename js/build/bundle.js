@@ -1110,6 +1110,9 @@ var hr = {
     firebase.database().ref("candidates/".concat(cid)).set(cData);
     var candidateUI = "<div class=\"col-sm-6 interview_card interview_filter_schd active p-2\">\n                    <div class=\"card\">\n                    <div class=\"card-body\">\n                        <h5 class=\"card-title\">".concat(cData.name, "</h5>\n                        <p class=\"card-text\">Skills: ").concat(cData.skills.join(","), "</p>\n                        <p class=\"card-text text-secondary\">Interview at: ").concat(cData.interviewDate, "</p>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.selectCandidate(").concat(cid, ")\" class=\"btn btn-primary\">Selected</a>\n                        <a href=\"javascript:void(0)\" onclick=\"hr.rejectCandidate(").concat(cid, ")\" class=\"btn btn-danger\">Rejected</a>\n                    </div>\n                    </div>\n                </div>");
     $("#interview_candidates").prepend(candidateUI);
+    $("#addCandidate-name").val("");
+    $("#addCandidate-skills").val("");
+    $("#addCandidate-date").val("");
     $("#addCandidate .close").trigger("click");
   },
   selectCandidate: function selectCandidate(uid) {
