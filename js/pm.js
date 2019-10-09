@@ -21,7 +21,7 @@ const pm = {
             .once("value", (snapshot)=>{
                 var members = snapshot.val()
                 Object.keys(members).map(function(key, idx){
-                    var member = `<div class="member-container bg-light"><h4 class="name">${members[key]}</h4></div>`
+                    var member = `<div class="member-container card"><p class="name">${members[key]}</p></div>`
                     $("#members").append(member);
                 })
             })

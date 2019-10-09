@@ -157,7 +157,7 @@ var pm = {
       firebase.database().ref("accounts/".concat(pm.val().project, "/members")).once("value", function (snapshot) {
         var members = snapshot.val();
         Object.keys(members).map(function (key, idx) {
-          var member = "<div class=\"member-container bg-light\"><h4 class=\"name\">".concat(members[key], "</h4></div>");
+          var member = "<div class=\"member-container card\"><p class=\"name\">".concat(members[key], "</p></div>");
           $("#members").append(member);
         });
       }); // firebase.database().ref(`requirements/${pm.val().project}/`)
