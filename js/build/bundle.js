@@ -147,14 +147,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var pm = {
   addRequirement: function addRequirement() {
     var requirement = $("#addrequirement_skills").val();
-    var nor = $("#addrequirement_nor").val();
+    var nor = parseInt($("#addrequirement_nor").val());
     var req = "<div class=\"member-container bg-light\"><p> ".concat(requirement, " ").concat(nor, "</p></div>");
     $("#team_requirements").append(req);
     this.getTeamName().then(function (pm) {
       firebase.database().ref("requirements/".concat(pm.val().project, "/")).once("value", function (snapshot) {
         var requirements = snapshot.val();
+        requirements.total = requirements.total + nor;
         requirements.requirements.push(_defineProperty({}, requirement, nor));
         firebase.database().ref("requirements/".concat(pm.val().project)).set(requirements);
+        $("#req_total").text(" Total requirements: ".concat(requirements.total));
         $("#addrequirement .close").trigger("click");
       });
     });
@@ -180,7 +182,7 @@ var pm = {
 
         if (requirements.requirements.length) {
           $("#team_requirements").append("<h4 class=\"team-members-title\">Requirements</h4>");
-          $("#team_requirements").append("<div class=\"alert alert-primary\" role=\"alert\">\n                    Total requirements: ".concat(requirements.total, "\n                  </div>"));
+          $("#team_requirements").append("<div id=\"req_total\" class=\"alert alert-primary\" role=\"alert\">\n                    Total requirements: ".concat(requirements.total, "\n                  </div>"));
           requirements.requirements.map(function (requirement) {
             var req = "<div class=\"member-container bg-light\"><p> ".concat(Object.keys(requirement)[0], " ").concat(requirement[Object.keys(requirement)[0]], "</p></div>");
             $("#team_requirements").append(req);

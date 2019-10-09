@@ -1,7 +1,7 @@
 const pm = {
     addRequirement: function(){
         var requirement = $("#addrequirement_skills").val();
-        var nor = $("#addrequirement_nor").val();
+        var nor = parseInt($("#addrequirement_nor").val());
         var req = `<div class="member-container bg-light"><p> ${requirement} ${nor}</p></div>`
         $("#team_requirements").append(req);
         this.getTeamName()
@@ -9,9 +9,11 @@ const pm = {
             firebase.database().ref(`requirements/${pm.val().project}/`)
             .once("value", (snapshot)=>{
                 var requirements = snapshot.val();
+                requirements.total = requirements.total+nor;
                 requirements.requirements.push({[requirement]:nor});
                 firebase.database().ref(`requirements/${pm.val().project}`)
                 .set(requirements);
+                $("#req_total").text(` Total requirements: ${requirements.total}`);
                 $("#addrequirement .close").trigger("click");
             })
         })
@@ -42,7 +44,7 @@ const pm = {
                 var requirements = snapshot.val();
                 if(requirements.requirements.length){
                     $("#team_requirements").append(`<h4 class="team-members-title">Requirements</h4>`);
-                    $("#team_requirements").append(`<div class="alert alert-primary" role="alert">
+                    $("#team_requirements").append(`<div id="req_total" class="alert alert-primary" role="alert">
                     Total requirements: ${requirements.total}
                   </div>`)
                     requirements.requirements.map(function(requirement){
