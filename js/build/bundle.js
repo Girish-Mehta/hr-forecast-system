@@ -48,6 +48,76 @@ var hr = {
     $(".interview_card").removeClass("active");
     $("#".concat(event.target.id)).addClass("active");
     $(".".concat(event.target.id)).addClass("active");
+  },
+  showAccounts: function showAccounts() {
+    firebase.database().ref('accounts/').once("value", function (snapshot) {
+      var accounts = snapshot.val();
+      Object.keys(accounts).map(function (account, index) {
+        firebase.database().ref("requirements/".concat(account)).once("value", function (snapshot) {
+          var accountRequirement = snapshot.val();
+          var accountName = accounts[account].name;
+
+          if (accountRequirement !== null) {
+            var accountUI = "<div class=\"col-sm-12 account_card p-2\" onclick=\"hr.selectAccount(".concat(index, ")\">\n                            <div class=\"card\">\n                                <div class=\"card-body\">\n                                    <h5 class=\"card-title\">").concat(accountName, "</h5>\n                                    <p class=\"card-text\">Requirement Total: ").concat(accountRequirement['total'], "</p>\n                                </div>\n                            </div>\n                        </div>");
+
+            if (index == 0) {
+              var requirementList = "<h6>Requirement Details</h6>";
+              accountRequirement.requirements.map(function (requirement) {
+                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> ".concat(Object.keys(requirement)[0], " ").concat(requirement[Object.keys(requirement)[0]], "</p></div>");
+              }); //    for(let i =0; i<accountRequirement.requirements.length; i++){
+              //        requirementList = requirementList + `<div>${accountRequirement.requirements[i]} : 1</div>`;
+              //    }
+            }
+          } else {
+            var accountUI = "<div class=\"col-sm-12 account_card p-2\" onclick=\"hr.selectAccount(".concat(index, ")\">\n                            <div class=\"card\">\n                                <div class=\"card-body\">\n                                <h5 class=\"card-title\">").concat(accountName, "</h5>\n                                <p class=\"card-text\">Requirement Total: 0</p>\n                                </div>\n                            </div>\n                        </div>");
+
+            if (index == 0) {
+              var requirementList = "<h6>Requirement Details</h6><div>Currently there is no requirement</div>";
+            }
+          }
+
+          $("#account_list").append(accountUI);
+          $(".account_card:first-child .card").css('background-color', '#22a8b8');
+
+          if (index == 0) {
+            $(".requirement-list").append(requirementList);
+          }
+        });
+      });
+    });
+  },
+  resetAccountContent: function resetAccountContent() {
+    $("#account_list").html("");
+    $(".requirement-list").html("");
+  },
+  selectAccount: function selectAccount(index) {
+    $(".account_card .card").css('background-color', '#fff');
+    $(".account_card:nth-child(".concat(index + 1, ") .card")).css('background-color', '#22a8b8');
+    $(".requirement-list").html("");
+    firebase.database().ref('accounts/').once("value", function (snapshot) {
+      var accounts = snapshot.val();
+      Object.keys(accounts).map(function (account, currentIndex) {
+        if (index == currentIndex) {
+          firebase.database().ref("requirements/".concat(account)).once("value", function (snapshot) {
+            var accountRequirement = snapshot.val();
+            var accountName = accounts[account].name;
+
+            if (accountRequirement !== null) {
+              var requirementList = "<h6>Requirement Details</h6>";
+              accountRequirement.requirements.map(function (requirement) {
+                requirementList = requirementList + "<div class=\"member-container bg-light\"><p> ".concat(Object.keys(requirement)[0], " ").concat(requirement[Object.keys(requirement)[0]], "</p></div>");
+              }); //   for(let i =0; i<accountRequirement.requirements.length; i++){
+              //     requirementList = requirementList + `<div>${accountRequirement.requirements[i][Object.keys(accountRequirement.requirements[i])[0]]} : 1</div>`;
+              // }
+            } else {
+              var requirementList = "<h6>Requirement Details</h6><div>Currently there is no requirement</div>";
+            }
+
+            $(".requirement-list").append(requirementList);
+          });
+        }
+      });
+    });
   }
 };
 "use strict";
