@@ -13,6 +13,7 @@ var auth = {
   logout: function logout() {
     if (localStorage.getItem(config.isloggedin) === "true") {
       firebase.auth().signOut();
+      showHome();
     }
   }
 };
@@ -40,6 +41,10 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
+    if (!user.email.split("@")[1] == "publicisgroupe.net") {
+      auth.logout();
+    }
+
     $("#login").hide();
     $("#myprofile, #logout").show();
     localStorage.setItem(config.isloggedin, "true");
@@ -162,7 +167,7 @@ var pm = {
       firebase.database().ref("accounts/".concat(pm.val().project, "/members")).once("value", function (snapshot) {
         var members = snapshot.val();
         Object.keys(members).map(function (key, idx) {
-          var member = "<div class=\"member-container bg-light\"><p class=\"name\">".concat(members[key], "</p></div>");
+          var member = "<div class=\"member-container card\"><p class=\"name\">".concat(members[key], "</p></div>");
           $("#members").append(member);
         });
       });
