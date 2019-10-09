@@ -75,11 +75,31 @@ const hr = {
                         if(index == 0){
                             var requirementList = `<h6>Requirement Details</h6>`;
                             accountRequirement.requirements.map(function(requirement){
-                         requirementList = requirementList+`<div class="member-container bg-light"><p> <span>${Object.keys(requirement)[0]}</span> <span>${requirement[Object.keys(requirement)[0]]}</span></p></div>`
-                            })
-                        //    for(let i =0; i<accountRequirement.requirements.length; i++){
-                        //        requirementList = requirementList + `<div>${accountRequirement.requirements[i]} : 1</div>`;
-                        //    }
+                            requirementList = requirementList+`<div class="member-container bg-light"><p> <span>${Object.keys(requirement)[0]}</span> <span>${requirement[Object.keys(requirement)[0]]}</span></p></div>`
+                            var reqSkill = Object.keys(requirement)[0];
+                            var availability = 0;
+                            var availableStatusBg = '';
+                            var available = '';
+                            firebase.database().ref(`candidates/`)
+                            .once("value", (snapshot)=>{
+                                var candidates = snapshot.val();
+                                Object.keys(candidates).map(function(candidate){
+                                    if(candidates[candidate].status === "selected") {
+                                        if(candidates[candidate].skills[0].toLowerCase() == reqSkill.toLowerCase()) {
+                                            availability += 1;
+                                        }
+                                    }
+                                    if(availability < requirement[Object.keys(requirement)[0]]) {
+                                        availableStatusBg = 'bg-danger text-light text-center';
+                                    } else {
+                                        availableStatusBg = 'bg-success text-light text-center';
+                                    }
+                                })
+                                available = `<div class="member-availability ${availableStatusBg}"><p>${availability}</p></div>`;
+                                $(".availability-list-result").prepend(available);
+                                availability = 0;
+                            });
+                        })
                         }
                     }else{ 
                         var accountUI = 
@@ -132,15 +152,12 @@ const hr = {
                             var reqSkill = Object.keys(requirement)[0];
                             availability = 0;
                             availableStatusBg = '';
-                            console.log("Looking for: ",reqSkill);
                             firebase.database().ref(`candidates/`)
                             .once("value", (snapshot)=>{
-                                console.log("Working: ");
                                 var candidates = snapshot.val();
                                 Object.keys(candidates).map(function(candidate){
                                     if(candidates[candidate].status === "selected") {
-                                        if(candidates[candidate].skills[0] == reqSkill) {
-                                            console.log("found: ",candidates[candidate].skills[0]);
+                                        if(candidates[candidate].skills[0].toLowerCase() == reqSkill.toLowerCase()) {
                                             availability += 1;
                                         }
                                     }
@@ -152,8 +169,8 @@ const hr = {
                                 })
                                 available = `<div class="member-availability ${availableStatusBg}"><p>${availability}</p></div>`;
                                 $(".availability-list-result").prepend(available);
+                                availability = 0;
                             });
-                            console.log("Available: ",available);
                         })
                         //   for(let i =0; i<accountRequirement.requirements.length; i++){
                         //     requirementList = requirementList + `<div>${accountRequirement.requirements[i][Object.keys(accountRequirement.requirements[i])[0]]} : 1</div>`;
@@ -163,6 +180,7 @@ const hr = {
                         }
                         $(".requirement-list").append(requirementList);
                         $(".availability-list-result").empty();
+                        availability = 0;
                     })
                 }
             })
